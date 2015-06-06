@@ -16,6 +16,19 @@ bld/
 [Bb]in/
 [Oo]bj/
 
+*.csproj
+*.sln
+
+Temp/
+ProjectSettings/
+obj/
+Library/
+Scenes/
+Assets/Standard Assets/
+Assets/UnityVS/
+Assets/Editor/
+*.asset
+
 # Roslyn cache directories
 *.ide/
 
