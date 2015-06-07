@@ -1,7 +1,11 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class database : MonoBehaviour {
+
+    //This file is purely for testing, it replicates the database.cs usually used for the login system.
+    //Other scripts can refer to this like they would the standard database.cs.
+    //-Curtis
 
     //Core
     public static string user;
@@ -19,7 +23,6 @@ public class database : MonoBehaviour {
         if (testMode == true) {
             print("Test mode is enabled, starting test mode.");
             user = testUsername;
-            startServer();
         }
 	}
 	
@@ -28,17 +31,29 @@ public class database : MonoBehaviour {
 	
 	}
 
+    void OnGUI () {
+        if (GUI.Button(new Rect(10, 160, 150, 30), "Start local server"))
+        {
+            print("Starting Local Server...");
+            startServer();
+        }
+        if (GUI.Button(new Rect(10, 200, 150, 30), "Connect to local server"))
+        {
+            print("Connecting to Local Server...");
+            connectToServer();
+        }
+    }
+
     void startServer ()
     {
         print("Starting main server on port 25000!");
-        Network.InitializeServer(2500, 25000, !Network.HavePublicAddress());
+        Network.InitializeServer(32, 25000, !Network.HavePublicAddress());
         MasterServer.RegisterHost(typeName, gameName);
     }
 
     void OnServerInitialized()
     {
         print("Server running, listening.");
-        connectToServer();
     }
 
     void connectToServer ()
@@ -49,8 +64,12 @@ public class database : MonoBehaviour {
 
     void OnConnectedToServer ()
     {
-        print("Connected to server, spawning player!");
-        SpawnPlayer();
+        if (Network.isClient)
+        {
+            print("Connected to server, spawning player!");
+            print("Username is: " + user);
+            SpawnPlayer();
+        }
     }
 
     void SpawnPlayer ()
